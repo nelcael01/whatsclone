@@ -5,10 +5,18 @@ import ChatIcon from '@material-ui/icons/Chat';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 import ChatListItem from './components/ChatListItem/ChatListItem';
-
+import ChatIntro from './components/ChatIntro/ChatIntro';
+import ChatWindow from './components/ChatWindow/ChatWindow';
 function App() {
 
-  const [chatlist, setChatList] = useState([{},{},{},{},{},{},{},{},{},{},{},{}])
+  const [chatlist, setChatList] = useState([
+    {chatId:1,title:'Fulano de tal', image:'https://www.w3schools.com/howto/img_avatar2.png'},
+    {chatId:2,title:'Fulano de tal', image:'https://www.w3schools.com/howto/img_avatar2.png'},
+    {chatId:3,title:'Fulano de tal', image:'https://www.w3schools.com/howto/img_avatar2.png'},
+    {chatId:4,title:'Fulano de tal', image:'https://www.w3schools.com/howto/img_avatar2.png'},
+  ])
+
+  const [activeChat,setActiveChat] = useState({})
 
   return(
     <div className='app-window'>
@@ -37,16 +45,18 @@ function App() {
 
           <div className='chatlist'>
             {chatlist.map((item,key)=>(
-              <ChatListItem key={key}></ChatListItem>
+              <ChatListItem onClick={()=>setActiveChat(chatlist[key])} key={key}></ChatListItem>
             ))}
           </div>
 
       </div>
       <div className="contentarea">
-            segunda divisão
-
-
-            
+            {activeChat.chatId != undefined &&
+              <ChatWindow></ChatWindow>
+            }
+            {activeChat.chatId === undefined &&
+              <ChatIntro></ChatIntro>
+            }
       </div>
     </div>      
   )
