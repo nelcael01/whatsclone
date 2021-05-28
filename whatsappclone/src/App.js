@@ -8,7 +8,7 @@ import ChatListItem from './components/ChatListItem/ChatListItem';
 
 function App() {
 
-  const [chatlist, setChatList] = useState([{},{},{},{}])
+  const [chatlist, setChatList] = useState([{},{},{},{},{},{},{},{},{},{},{},{}])
 
   return(
     <div className='app-window'>
