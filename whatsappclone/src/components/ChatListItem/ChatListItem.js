@@ -1,16 +1,17 @@
 import React from 'react';
 import './ChatListItem.css'
-function ChatListItem({onClick}) {
+function ChatListItem({onClick,active,data}) {
     return(
         <div
         onClick={onClick}
-        className="chatListItem"
+        // essa sentença além de colocar a classe chatListItem ela faz uma verificação da props active para ver se adiciona uma classe com o nome Classactive
+        className={`chatListItem ${active?'Classactive':''}`}
         >
-            <img className='chatListItem--avatar' src='https://www.w3schools.com/howto/img_avatar2.png'></img>
+            <img className='chatListItem--avatar' src={data.image}></img>
             <div className="chatListItem--lines">
                 <div className="chatListItem--line">
-                    <div className='chatListItem--name'>Nelcael Alves Ferreira</div>
-                    <div className="chatListItem-date">19:00</div>
+                    <div className='chatListItem--name'>{data.title}</div>
+                    <div className="chatListItem-date">{data.hours}</div>
                 </div>
                 <div className="chatListItem--line">
                     <div className="chatListItem--lastMsg">

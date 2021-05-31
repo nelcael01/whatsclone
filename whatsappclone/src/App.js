@@ -10,10 +10,10 @@ import ChatWindow from './components/ChatWindow/ChatWindow';
 function App() {
 
   const [chatlist, setChatList] = useState([
-    {chatId:1,title:'Fulano de tal', image:'https://www.w3schools.com/howto/img_avatar2.png'},
-    {chatId:2,title:'Fulano de tal', image:'https://www.w3schools.com/howto/img_avatar2.png'},
-    {chatId:3,title:'Fulano de tal', image:'https://www.w3schools.com/howto/img_avatar2.png'},
-    {chatId:4,title:'Fulano de tal', image:'https://www.w3schools.com/howto/img_avatar2.png'},
+    {chatId:1,title:'Fulano de tal - 1', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'19:00'},
+    {chatId:2,title:'Fulano de tal - 2', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'10:00'},
+    {chatId:3,title:'Fulano de tal - 3', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'15:00'},
+    {chatId:4,title:'Fulano de tal - 4', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'13:00'},
   ])
 
   const [activeChat,setActiveChat] = useState({})
@@ -44,12 +44,19 @@ function App() {
           </div>
 
           <div className='chatlist'>
+            {/* item são os elementos do array e key é a chave que está sendo percorrida como se fosse o indice */}
             {chatlist.map((item,key)=>(
-              <ChatListItem onClick={()=>setActiveChat(chatlist[key])} key={key}></ChatListItem>
+              <ChatListItem
+                key={key}
+                // Nessa codificação abaixo atráves do onclick com o setActiveChat é adicionado no activeChat qual é o chat que está ativo e seus elementos como chatid
+                active={activeChat.chatId === chatlist[key].chatId}
+                // item é os elementos do array que está sendo percorrido
+                data={item}
+                onClick={()=>setActiveChat(chatlist[key])}>
+              </ChatListItem>
             ))}
           </div>
-
-      </div>
+      </div>  
       <div className="contentarea">
             {activeChat.chatId != undefined &&
               <ChatWindow></ChatWindow>
