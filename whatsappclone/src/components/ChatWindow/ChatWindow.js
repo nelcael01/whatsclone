@@ -1,9 +1,34 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './ChatWindow.css';
+// icones que serão utilizados
 import SearchIcon from '@material-ui/icons/Search';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+import CloseIcon from '@material-ui/icons/Close';
+import SendIcon from '@material-ui/icons/Send';
+import MicIcon from '@material-ui/icons/Mic';
+// importação do campo de emoji
+import EmojiPicker from 'emoji-picker-react'
 function ChatWindow() {
+
+    const [emojiOpen, setEmojiOpen] = useState(false)
+    const [text,setText] = useState('');
+
+    // função que vai definir oq acontece se clicar ouver clique nesse emoji
+    // esse handleEmojiClick permite acessar o emoji em si, aqui eu uso o setText para contatenar ele ao texto digitado
+    function hadleEmojiClick(e,emojiObject) {
+        setText(text+emojiObject.emoji)
+    }
+
+    function handleOpenEmoji() {
+        setEmojiOpen(true);
+    }
+    function handleCloseEmoji() {
+        setEmojiOpen(false)
+    }
+
+
     return(
         <div className='chatWindow'>
             <div className='chatWindow--header'>
@@ -14,24 +39,64 @@ function ChatWindow() {
                 <div className='chatWindow--headerbuttons'>
                     <div className='chatWindow--btn '>
                         <SearchIcon style={{color:'#919191'}}></SearchIcon>
-                        <AttachFileIcon></AttachFileIcon>
-                        <AttachFileIcon></AttachFileIcon>
                     </div>
                     <div className='chatWindow--btn '>
                         <AttachFileIcon style={{color:'#919191'}}></AttachFileIcon>
                     </div>
                     <div className='chatWindow--btn '>
                         <MoreVertIcon style={{color:'#919191'}}></MoreVertIcon>
-                        
                     </div>
                 </div>
 
             </div>
             <div className='chatWindow--body'>
-
+                
             </div>
-            <div className='chatWindow--footer '>
+            
+            {/* faz a verificação para ver se a useState emojijOpen está ativa ou não, se estiver a altura dos emojis será de 250px, se não será de 0 */}
+            <div className="chatWindow--emojiarea" style={{height: emojiOpen? '250px':'0px'}}>
+                <EmojiPicker
+                    disableSearchBar
+                    disableSkinTonePicker
+                    onEmojiClick={hadleEmojiClick}
+                    // propriedade do proprio componente que seta o estilo, por aqui que se tira o tamanho padrão do componente
+                    pickerStyle={{ width: 'auto', backgroundColor: 'none'}}
+                ></EmojiPicker>
+            </div>
 
+            <div className='chatWindow--footer '>
+                <div className="chatWindow--pre">
+                    
+                    <div 
+                     className='chatWindow--btn '
+                     onClick={handleCloseEmoji}
+                     style={{width: emojiOpen?40:0}}
+                     >
+                        <CloseIcon style={{color:'#919191'}}></CloseIcon>
+                    </div>
+
+                    <div
+                     className='chatWindow--btn '
+                     onClick={handleOpenEmoji}
+                    >
+                        <InsertEmoticonIcon style={{color: emojiOpen?'#009688':'#919191'}}></InsertEmoticonIcon>
+                    </div>
+                </div>
+                <div className="chatWindow--inputarea">
+                    <input 
+                        type="text"
+                        className="chatWindow--input"
+                        placeholder='Digite uma mensagem'
+                        value={text}
+                        // permite o valor de text ser alterado comforme é alterado pelo inpunt
+                        onChange={e=>setText(e.target.value)}
+                    />
+                </div>
+                <div className="chatWindow--pos">
+                    <div className='chatWindow--btn '>
+                        <SendIcon style={{color:'#919191'}}></SendIcon>
+                    </div>
+                </div>
             </div>
         </div>
     )

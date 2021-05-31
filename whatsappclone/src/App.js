@@ -10,10 +10,10 @@ import ChatWindow from './components/ChatWindow/ChatWindow';
 function App() {
 
   const [chatlist, setChatList] = useState([
-    {chatId:1,title:'Fulano de tal - 1', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'19:00'},
-    {chatId:2,title:'Fulano de tal - 2', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'10:00'},
-    {chatId:3,title:'Fulano de tal - 3', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'15:00'},
-    {chatId:4,title:'Fulano de tal - 4', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'13:00'},
+    {chatId:1,title:'Nelcael ', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'19:00'},
+    {chatId:2,title:'Ludmila ', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'10:00'},
+    {chatId:3,title:'Magali ', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'15:00'},
+    {chatId:4,title:'Geraldo', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'13:00'},
   ])
 
   const [activeChat,setActiveChat] = useState({})
