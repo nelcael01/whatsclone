@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import './ChatWindow.css';
+import MessageItem from '../MessageItem/MessageItem';
 // icones que serão utilizados
 import SearchIcon from '@material-ui/icons/Search';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
@@ -11,9 +12,21 @@ import MicIcon from '@material-ui/icons/Mic';
 // importação do campo de emoji
 import EmojiPicker from 'emoji-picker-react'
 function ChatWindow() {
+    
+    let recognition = null;
+    let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition !== undefined) {
+        recognition = new SpeechRecognition();
+    }
+    
 
     const [emojiOpen, setEmojiOpen] = useState(false)
     const [text,setText] = useState('');
+    const [listening,setListening] = useState(false);
+    const [list,setList] = useState([
+    {},
+    {},
+    {}])
 
     // função que vai definir oq acontece se clicar ouver clique nesse emoji
     // esse handleEmojiClick permite acessar o emoji em si, aqui eu uso o setText para contatenar ele ao texto digitado
@@ -28,7 +41,24 @@ function ChatWindow() {
         setEmojiOpen(false)
     }
 
-
+    function handleMicClick() {
+        
+        if (recognition!==null) {
+            recognition.onstart = () =>{
+                setListening(true)
+            }
+            recognition.onend = () =>{
+                setListening(false);
+            }
+            recognition.onresult = (e) =>{
+                setText(e.results[0][0].transcript)
+            }
+            recognition.start();
+        }
+    }
+    function handleSendClick() {
+        
+    }
     return(
         <div className='chatWindow'>
             <div className='chatWindow--header'>
@@ -49,8 +79,13 @@ function ChatWindow() {
                 </div>
 
             </div>
-            <div className='chatWindow--body'>
-                
+            <div  className='chatWindow--body'>
+                {list.map((item, key)=>(
+                    <MessageItem
+                        key={key}
+                        data={item}
+                    />
+                ))}
             </div>
             
             {/* faz a verificação para ver se a useState emojijOpen está ativa ou não, se estiver a altura dos emojis será de 250px, se não será de 0 */}
@@ -93,9 +128,17 @@ function ChatWindow() {
                     />
                 </div>
                 <div className="chatWindow--pos">
-                    <div className='chatWindow--btn '>
-                        <SendIcon style={{color:'#919191'}}></SendIcon>
-                    </div>
+
+                    {text == '' &&
+                        <div onClick={handleMicClick} className='chatWindow--btn '>
+                            <MicIcon style={{color: listening?'#126ece':'#919191'}}></MicIcon>
+                        </div>
+                    }
+                    {text != '' &&
+                        <div onClink={handleSendClick} className='chatWindow--btn '>
+                            <SendIcon style={{color:'#919191'}}></SendIcon>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
