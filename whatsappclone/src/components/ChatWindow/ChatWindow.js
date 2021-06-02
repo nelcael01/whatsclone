@@ -11,7 +11,8 @@ import SendIcon from '@material-ui/icons/Send';
 import MicIcon from '@material-ui/icons/Mic';
 // importação do campo de emoji
 import EmojiPicker from 'emoji-picker-react'
-function ChatWindow() {
+
+function ChatWindow({user}) {
     
     let recognition = null;
     let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -24,9 +25,27 @@ function ChatWindow() {
     const [text,setText] = useState('');
     const [listening,setListening] = useState(false);
     const [list,setList] = useState([
-    {},
-    {},
-    {}])
+    {author: 123,body:'Primeira mensagem '},
+    {author: 123,body:'Segunda mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'Terceira mensagem '},
+    ])
 
     // função que vai definir oq acontece se clicar ouver clique nesse emoji
     // esse handleEmojiClick permite acessar o emoji em si, aqui eu uso o setText para contatenar ele ao texto digitado
@@ -84,6 +103,7 @@ function ChatWindow() {
                     <MessageItem
                         key={key}
                         data={item}
+                        user={user}
                     />
                 ))}
             </div>

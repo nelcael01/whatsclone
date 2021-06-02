@@ -1,8 +1,9 @@
-.messageLine{
+.messageLine {
     margin-bottom: 10px;
     display: flex;
 }
-.messageItem{
+
+.messageItem {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 1px 1px #ccc;
@@ -12,11 +13,13 @@
     max-width: 90%;
     position: relative;
 }
-.messageText{
+
+.messageText {
     font-size: 14px;
     margin: 5px 40px 5px 5px;
 }
-.messageDate{
+
+.messageDate {
     font-size: 11px;
     color: #999;
     margin-right: 5px;
@@ -24,4 +27,3 @@
     height: 15px;
     margin-top: -15px;
 }
-
