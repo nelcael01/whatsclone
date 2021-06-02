@@ -7,6 +7,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import ChatListItem from './components/ChatListItem/ChatListItem';
 import ChatIntro from './components/ChatIntro/ChatIntro';
 import ChatWindow from './components/ChatWindow/ChatWindow';
+import NewChat from './components/NewChat/NewChat'
+
 function App() {
 
   const [chatlist, setChatList] = useState([
@@ -23,16 +25,31 @@ function App() {
     name:'Nelcael'
   });
 
+  const[showNewChat, setShowNewChat] = useState(false);
+
+  function handleNewChat() {
+    setShowNewChat(true);
+  }
+
   return(
     <div className='app-window'>
       <div className="sidebar">
+
+          <NewChat 
+            chatlist={chatlist}
+            user={user}
+            show={showNewChat}
+            setShow ={setShowNewChat}
+          />
+
+
           <header>
             <img className='header--avatar' src={user.avatar} alt=""></img>
             <div className="header-buttons">
                 <div className="header-btn">
                   <DonutLargeIcon style={{color:'#919191'}}></DonutLargeIcon>
                 </div>
-                <div className="header-btn">
+                <div onClick={handleNewChat} className="header-btn">
                   <ChatIcon style={{color:'#919191'}}></ChatIcon>
                 </div>
                 <div className="header-btn">

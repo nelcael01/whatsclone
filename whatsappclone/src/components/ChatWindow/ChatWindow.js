@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect, useRef} from 'react';
 import './ChatWindow.css';
 import MessageItem from '../MessageItem/MessageItem';
 // icones que serão utilizados
@@ -44,8 +44,20 @@ function ChatWindow({user}) {
     {author: 1234,body:'Terceira mensagem '},
     {author: 1234,body:'Terceira mensagem '},
     {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
+    {author: 1234,body:'ultima mensagem'},
     ])
+
+
+    // uso do useRef que pega os atributos da função que quero e coloca nessa variavel
+    const body = useRef();
+
+    
+    useEffect(()=>{
+        // verificação para ver ser tem barra de rolagem no elemento 
+        if (body.current.scrollHeight > body.current.offsetHeight) {
+            body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight;
+        }
+    },[list])
 
     // função que vai definir oq acontece se clicar ouver clique nesse emoji
     // esse handleEmojiClick permite acessar o emoji em si, aqui eu uso o setText para contatenar ele ao texto digitado
@@ -98,7 +110,7 @@ function ChatWindow({user}) {
                 </div>
 
             </div>
-            <div  className='chatWindow--body'>
+            <div ref={body} className='chatWindow--body'>
                 {list.map((item, key)=>(
                     <MessageItem
                         key={key}
