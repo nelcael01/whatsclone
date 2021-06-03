@@ -8,6 +8,7 @@ import ChatListItem from './components/ChatListItem/ChatListItem';
 import ChatIntro from './components/ChatIntro/ChatIntro';
 import ChatWindow from './components/ChatWindow/ChatWindow';
 import NewChat from './components/NewChat/NewChat'
+import Login from './components/Login/Login';
 
 function App() {
 
@@ -19,16 +20,27 @@ function App() {
   ])
 
   const [activeChat,setActiveChat] = useState({})
-  const [user,setUser] = useState({
-    id:1234,
-    avatar: 'https://www.w3schools.com/howto/img_avatar2.png',
-    name:'Nelcael'
-  });
+  const [user,setUser] = useState(null);
 
   const[showNewChat, setShowNewChat] = useState(false);
 
   function handleNewChat() {
     setShowNewChat(true);
+  }
+
+  function handleLoginData(u) {
+    let newUser  = {
+      id: u.uid,
+      name: u.displayName,
+      avatar: u.photoURL
+    }
+    // 
+    setUser(newUser);
+  }
+
+  if (user === null) {
+    // esse onReceive ta dizendo para quando o componente receber as informações ele mandar para handleLoginData
+    return(<Login onReceive={handleLoginData} />)
   }
 
   return(
