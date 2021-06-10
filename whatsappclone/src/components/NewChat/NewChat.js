@@ -1,19 +1,32 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import './NewChat.css'
-
+import Api from '../../Api'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 function NewChat({setShow,show,user,chatlist}) {
 
     const [list, setList] = useState([
-        {id:123, avatar:'https://www.w3schools.com/howto/img_avatar2.png',name:'Geraldo contato'},
-        {id:123, avatar:'https://www.w3schools.com/howto/img_avatar2.png',name:'Magali Coutinho contato'},
-        {id:123, avatar:'https://www.w3schools.com/howto/img_avatar2.png',name:'Ludmila contato'},
-        {id:123, avatar:'https://www.w3schools.com/howto/img_avatar2.png',name:'Lais Aparecida contato'},
+        
     ]);
 
+    useEffect(()=>{
+        async function getList() {
+            if (user!=null) {
+                let result = await Api.getContactList(user.id)
+                setList(result);
+            }
+        }
+        // tenho que criar a função e depois chama-lá
+        getList();
+    },[user])
+    
     function handleClose() {
         setShow(false);
+    }
+
+    async function addNewChat(user2) {
+        await Api.addNewChat(user,user2);
+        handleClose();
     }
 
     return(
@@ -29,7 +42,7 @@ function NewChat({setShow,show,user,chatlist}) {
             </div>
             <div className="newChat--list">
                 {list.map((item,key)=>(
-                  <div className="newChat--item"  key={key}>
+                  <div className="newChat--item" onClick={()=>addNewChat(item)} key={key}>
                       <img src={item.avatar} alt="" className="newChat--itemavatar"/>
                       <div className="nerChat--itemname">{item.name}</div>
                   </div>  

@@ -13,14 +13,11 @@ import MicIcon from '@material-ui/icons/Mic';
 import EmojiPicker from 'emoji-picker-react'
 
 function ChatWindow({user}) {
-    
     let recognition = null;
     let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition !== undefined) {
         recognition = new SpeechRecognition();
     }
-    
-
     const [emojiOpen, setEmojiOpen] = useState(false)
     const [text,setText] = useState('');
     const [listening,setListening] = useState(false);

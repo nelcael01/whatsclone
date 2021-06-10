@@ -7,7 +7,6 @@ function Login({onReceive}) {
         let result = await Api.fbPopup();
         if (result) {
             // se deu certo ele vai mandar os dados do usuario para o onReceive
-            
             onReceive(result.user);
         }else{
             alert('Erro!')

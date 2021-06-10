@@ -9,18 +9,27 @@ import ChatIntro from './components/ChatIntro/ChatIntro';
 import ChatWindow from './components/ChatWindow/ChatWindow';
 import NewChat from './components/NewChat/NewChat'
 import Login from './components/Login/Login';
+import Api from './Api';
 
 function App() {
 
-  const [chatlist, setChatList] = useState([
-    {chatId:1,title:'Nelcael ', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'19:00'},
-    {chatId:2,title:'Ludmila ', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'10:00'},
-    {chatId:3,title:'Magali ', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'15:00'},
-    {chatId:4,title:'Geraldo', image:'https://www.w3schools.com/howto/img_avatar2.png',hours:'13:00'},
-  ])
+  const [chatlist, setChatList] = useState([]);
 
+  
   const [activeChat,setActiveChat] = useState({})
-  const [user,setUser] = useState(null);
+  // está ficando logado, para tirar a trava basta colocar useState null
+  const [user,setUser] = useState({
+    id:'A8SkzGds87Q9wFakoVyKbycuoWi1',
+    name: 'Nelcael Alves Ferreira',
+    avatar:'https://graph.facebook.com/3158330557727909/picture'
+  });
+
+  useEffect(()=>{
+    if (user!=null) {
+      let unsub = Api.onChatList(user.id,setChatList);
+      return unsub
+    }
+  },[user]);
 
   const[showNewChat, setShowNewChat] = useState(false);
 
@@ -28,13 +37,16 @@ function App() {
     setShowNewChat(true);
   }
 
-  function handleLoginData(u) {
+  async function handleLoginData(u) {
     let newUser  = {
       id: u.uid,
       name: u.displayName,
-      avatar: u.photoURL
+      avatar : u.photoURL
     }
-    // 
+    // adicionando um novo usuario
+    await Api.addUser(newUser);
+
+    // colocando a variavel newUser dentro do user
     setUser(newUser);
   }
 
@@ -57,6 +69,7 @@ function App() {
 
           <header>
             <img className='header--avatar' src={user.avatar} alt=""></img>
+            
             <div className="header-buttons">
                 <div className="header-btn">
                   <DonutLargeIcon style={{color:'#919191'}}></DonutLargeIcon>
