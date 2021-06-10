@@ -5,25 +5,25 @@
 }
 .login--header{
     display: flex;
-    padding: 70px;
+    padding-top: 1%;
     font-size: 55px;
     color: white ;
     justify-content: center;
 }
 
-.login--btn{
-    display: flex;
-    align-items: center;
-    align-items: center;
-    justify-content: center;
-    padding-top: 20%;
-}
 .login--imagem{
     display: flex;
     align-items: center;
     align-items: center;
     justify-content: center;
-    padding-top: %;
+    padding-top: 2%;
+}
+.login--btn{
+    display: flex;
+    align-items: center;
+    align-items: center;
+    justify-content: center;
+    padding-top: 15%;
 }
 .login--imagem img{
     width: 200px;
@@ -41,9 +41,8 @@
 .login--footer{
     display: flex;
     align-items: center;
-    align-items: center;
     justify-content: center;
-    padding-top: 15%;
+    padding-top: 13%;
     color: white;
     font-size: 20px
 }
