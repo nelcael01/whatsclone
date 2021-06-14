@@ -9,10 +9,11 @@ import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import CloseIcon from '@material-ui/icons/Close';
 import SendIcon from '@material-ui/icons/Send';
 import MicIcon from '@material-ui/icons/Mic';
+import Api from  '../../Api';
 // importação do campo de emoji
 import EmojiPicker from 'emoji-picker-react'
 
-function ChatWindow({user}) {
+function ChatWindow({user,data}) {
     let recognition = null;
     let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition !== undefined) {
@@ -21,28 +22,14 @@ function ChatWindow({user}) {
     const [emojiOpen, setEmojiOpen] = useState(false)
     const [text,setText] = useState('');
     const [listening,setListening] = useState(false);
-    const [list,setList] = useState([
-    {author: 123,body:'Primeira mensagem '},
-    {author: 123,body:'Segunda mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'Terceira mensagem '},
-    {author: 1234,body:'ultima mensagem'},
-    ])
+    const [list,setList] = useState([])
+
+    useEffect(() => {
+        setList([])
+        // call of the api function that loads the message list
+        let unsub = Api.onChatContent(data.chatId,setList)
+        return unsub;
+    }, [data.chatId]);
 
 
     // uso do useRef que pega os atributos da função que quero e coloca nessa variavel
@@ -84,15 +71,23 @@ function ChatWindow({user}) {
             recognition.start();
         }
     }
-    function handleSendClick() {
-        
+    
+    function handleSendClick(e) {
+        if (e.keyCode == 13) {
+            handleInputKeyUp()
+        }
+    }
+    function handleInputKeyUp() {
+        if (text!='') {
+            
+        }
     }
     return(
         <div className='chatWindow'>
             <div className='chatWindow--header'>
                 <div className='chatWindow--headerinfo'>
-                    <img className='chatWindow--avatar' src='https://www.w3schools.com/howto/img_avatar2.png' alt=''></img>
-                    <div className='chatWindow--name'>Nelcael Alves Ferreira</div>
+                    <img className='chatWindow--avatar' src={data.image} alt=''></img>
+                    <div className='chatWindow--name'>{data.title}</div>
                 </div>
                 <div className='chatWindow--headerbuttons'>
                     <div className='chatWindow--btn '>
@@ -154,6 +149,7 @@ function ChatWindow({user}) {
                         value={text}
                         // permite o valor de text ser alterado comforme é alterado pelo inpunt
                         onChange={e=>setText(e.target.value)}
+                        onKeyUp={handleInputKeyUp}
                     />
                 </div>
                 <div className="chatWindow--pos">

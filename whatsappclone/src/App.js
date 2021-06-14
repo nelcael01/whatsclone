@@ -107,6 +107,7 @@ function App() {
       <div className="contentarea">
             {activeChat.chatId != undefined &&
               <ChatWindow
+                data={activeChat}
                 user={user}
               ></ChatWindow>
             }
