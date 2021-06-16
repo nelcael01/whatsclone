@@ -23,11 +23,12 @@ function ChatWindow({user,data}) {
     const [text,setText] = useState('');
     const [listening,setListening] = useState(false);
     const [list,setList] = useState([])
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         setList([])
         // call of the api function that loads the message list
-        let unsub = Api.onChatContent(data.chatId,setList)
+        let unsub = Api.onChatContent(data.chatId,setList,setUsers)
         return unsub;
     }, [data.chatId]);
 
@@ -72,14 +73,16 @@ function ChatWindow({user,data}) {
         }
     }
     
-    function handleSendClick(e) {
+    function handleInputKeyUp(e) {
         if (e.keyCode == 13) {
-            handleInputKeyUp()
+            handleSendClick()
         }
     }
-    function handleInputKeyUp() {
-        if (text!='') {
-            
+    function handleSendClick() {
+        if (text != '') {
+            Api.sendMessage(data,user.id,'text',text)
+            setText('');
+            setEmojiOpen(false);
         }
     }
     return(

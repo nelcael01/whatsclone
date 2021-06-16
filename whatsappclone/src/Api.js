@@ -8,6 +8,7 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 const db = firebaseApp.firestore();
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default{
     // conexão com facebook
     fbPopup: async()=>{
@@ -73,15 +74,39 @@ export default{
             }
         });
     },
-    onChatContent:(chatId,setList) =>{
+    onChatContent:(chatId,setList,setUsers) =>{
         return db.collection('chats').doc(chatId).onSnapshot((doc)=>{
             if (doc.exists) {
                 let data = doc.data();
                 setList(data.messages);
+                setUsers(data.users)
             }
         })
     },
-    sendMessage:(chatData,userId,type,body) =>{
-        
+    sendMessage: async(chatData,userId,type,body,users) =>{
+            let now = new Date();
+            db.collection('chats').doc(chatData.chatId).update({
+                messages: firebase.firestore.FieldValue.arrayUnion({
+                    type: type,
+                    author:userId,
+                    body: body,
+                    data: now
+                })
+            });
+            for(let i in users){
+                let u = await db.collection('users').doc(users[i]).get();
+                let uData = u.data();
+                if (uData.chats) {
+                    let chats = [...uData.chats];
+
+                    for(let e in chats){
+                        if(chats[e].chatId == chatData.chatId){
+                            chats[e].lastMessage = body;
+                            chats[e].lastMessage = now
+                        }
+                    }
+                    await db.collection('users').doc(users[i]);
+                }
+            }
     }
 };
