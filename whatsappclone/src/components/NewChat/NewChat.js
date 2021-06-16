@@ -3,7 +3,7 @@ import './NewChat.css'
 import Api from '../../Api'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-function NewChat({setShow,show,user,chatlist}) {
+function NewChat({setShow,show,user,chatlist,setActiveChat}) {
 
     const [list, setList] = useState([
         
@@ -24,9 +24,11 @@ function NewChat({setShow,show,user,chatlist}) {
         setShow(false);
     }
 
-    async function addNewChat(user2) {
+    async function addNewChat(user2,key) {
         await Api.addNewChat(user,user2);
         handleClose();
+        // console.log(key);
+        // setActiveChat(list[key].user2)
     }
 
     return(
@@ -42,7 +44,7 @@ function NewChat({setShow,show,user,chatlist}) {
             </div>
             <div className="newChat--list">
                 {list.map((item,key)=>(
-                  <div className="newChat--item" onClick={()=>addNewChat(item)} key={key}>
+                  <div className="newChat--item" onClick={()=>addNewChat(item,key)} key={key}>
                       <img src={item.avatar} alt="" className="newChat--itemavatar"/>
                       <div className="nerChat--itemname">{item.name}</div>
                   </div>  

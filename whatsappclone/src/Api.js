@@ -69,7 +69,21 @@ export default{
             if (doc.exists) {
                 let data = doc.data()
                 if (data.chats) {
-                    setChatList(data.chats);
+                    let chats = [...data.chats]
+                    chats.sort((a,b)=>{
+                        if (a.lastMessageDate === undefined) {
+                            return -1;
+                        }
+                        if(b.lastMessageDate === undefined){
+                            return 1
+                        }
+                        if (a.lastMessageDate.seconds < b.lastMessageDate.seconds) {
+                            return 1;
+                        }else{
+                            return -1
+                        }
+                    })
+                    setChatList(chats);
                 }
             }
         });
@@ -96,17 +110,26 @@ export default{
             for(let i in users){
                 let u = await db.collection('users').doc(users[i]).get();
                 let uData = u.data();
+                
                 if (uData.chats) {
                     let chats = [...uData.chats];
-
                     for(let e in chats){
                         if(chats[e].chatId == chatData.chatId){
+                            // console.log(chats[e].lastMessage);
                             chats[e].lastMessage = body;
-                            chats[e].lastMessage = now
+                            chats[e].lastMessageDate = now;
                         }
                     }
-                    await db.collection('users').doc(users[i]);
+                    await db.collection('users').doc(users[i]).update({
+                        chats
+                    });
                 }
             }
     }
+
+
+
+
+
+
 };

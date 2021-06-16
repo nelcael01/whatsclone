@@ -23,7 +23,7 @@ function App() {
     name: 'Nelcael Alves Ferreira',
     avatar:'https://graph.facebook.com/3158330557727909/picture'
   });
-
+  
   useEffect(()=>{
     if (user!=null) {
       let unsub = Api.onChatList(user.id,setChatList);
@@ -64,6 +64,7 @@ function App() {
             user={user}
             show={showNewChat}
             setShow ={setShowNewChat}
+            setActiveChat={setActiveChat}
           />
 
 

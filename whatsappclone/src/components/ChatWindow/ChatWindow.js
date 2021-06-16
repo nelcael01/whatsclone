@@ -80,7 +80,7 @@ function ChatWindow({user,data}) {
     }
     function handleSendClick() {
         if (text != '') {
-            Api.sendMessage(data,user.id,'text',text)
+            Api.sendMessage(data,user.id,'text',text,users)
             setText('');
             setEmojiOpen(false);
         }

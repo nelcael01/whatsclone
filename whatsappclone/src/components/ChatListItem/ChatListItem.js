@@ -13,7 +13,7 @@ function ChatListItem({onClick,active,data}) {
             minutes = minutes<10?'0'+ minutes :minutes;
             setTime(`${hours}:${minutes}`);
         }
-    },[time])
+    },[data])
 
     return(
         <div
