@@ -18,11 +18,7 @@ function App() {
   
   const [activeChat,setActiveChat] = useState({})
   // está ficando logado, para tirar a trava basta colocar useState null
-  const [user,setUser] = useState({
-    id:'A8SkzGds87Q9wFakoVyKbycuoWi1',
-    name: 'Nelcael Alves Ferreira',
-    avatar:'https://graph.facebook.com/3158330557727909/picture'
-  });
+  const [user,setUser] = useState(null);
   
   useEffect(()=>{
     if (user!=null) {
