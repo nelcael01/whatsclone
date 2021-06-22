@@ -15,7 +15,7 @@ function Login({onReceive}) {
     return(
         <div className="login">
             <div className="login--header">
-                WhatsApp Clone 
+                WhatsApp Clone - Testando
             </div>
             
             <div className="login--imagem">
